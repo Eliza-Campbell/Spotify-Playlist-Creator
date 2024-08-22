@@ -67,6 +67,8 @@ h1 {
 .searchresults {
 	background-color: var(--darkgray);
 	border-radius: 3rem;
+	width: 384px;
+	height: 670px;
 }
 
 .playlist h2,
@@ -132,6 +134,7 @@ h1 {
 	width: 1.5rem;
 	margin-right: 1.5rem;
 	background-color: var(--green);
+	border-color: var(--gray);
 }
 
 .savebuttoncontainer {

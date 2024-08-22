@@ -5,7 +5,7 @@ function SearchBar() {
 	return (
 		<div className="searchbar">
 			<img src={magnifyingGlass} />
-			<input id="search" type="text" value="Search Spotify"></input>
+			<input id="search" type="text" placeholder="Search Spotify"></input>
 		</div>
 	);
 }
