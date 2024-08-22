@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import magnifyingGlass from "./imgs/magnifying-glass.png";
 
 function SearchBar({ handleSearch }) {
@@ -9,6 +9,18 @@ function SearchBar({ handleSearch }) {
 			handleSearch(text);
 		}
 	};
+
+	useEffect(() => {
+		const handleEnter = (e) => {
+			if (e.key === "Enter" && text) {
+				handleSearch(text);
+			}
+		};
+		window.addEventListener("keypress", handleEnter);
+		return () => {
+			window.removeEventListener("keypress", handleEnter);
+		};
+	}, [text]);
 
 	return (
 		<div className="searchbar">
