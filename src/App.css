@@ -63,21 +63,18 @@ h1 {
 	padding-top: 1.5rem;
 }
 
-.playlist,
-.searchresults {
+.tracklist {
 	background-color: var(--darkgray);
 	border-radius: 3rem;
 	width: 384px;
 	height: 670px;
 }
 
-.playlist h2,
-.searchresults h2 {
+.tracklist h2 {
 	text-align: center;
 }
 
-.songscontainer,
-.playlistcontainer {
+.songscontainer {
 	height: 550px;
 	overflow-y: auto;
 	overflow-x: hidden;

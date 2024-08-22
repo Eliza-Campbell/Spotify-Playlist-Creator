@@ -1,13 +1,12 @@
 import React from "react";
 import "../App.css";
-import SearchResults from "./SearchResults.js";
-import Playlist from "./Playlist.js";
+import Tracklist from "./Tracklist.js";
 
 function Container() {
 	return (
 		<div className="maincontainer">
-			<SearchResults />
-			<Playlist />
+			<Tracklist type="Search Results" />
+			<Tracklist type="Playlist" />
 		</div>
 	);
 }

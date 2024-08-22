@@ -3,7 +3,7 @@ import hitmehardandsoft from "./imgs/hitmehardandsoft.png";
 import disc from "./imgs/disc.png";
 import "../App.css";
 
-function Song() {
+function Song({ buttonValue }) {
 	return (
 		<div className="song">
 			<div className="songcontainer">
@@ -17,7 +17,7 @@ function Song() {
 					</div>
 				</div>
 			</div>
-			<button className="addbutton">+</button>
+			<button className="addbutton">{buttonValue}</button>
 		</div>
 	);
 }
