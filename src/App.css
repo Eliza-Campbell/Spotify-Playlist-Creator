@@ -1,38 +1,152 @@
-.App {
-  text-align: center;
+:root {
+	--black: #121212;
+	--darkgray: #212121;
+	--gray: #535353;
+	--lightgray: #b3b3b3;
+	--green: #1db954;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+body {
+	background-color: var(--black);
+	color: var(--lightgray);
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+::-moz-selection {
+	color: white;
+	background: var(--green);
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+::selection {
+	color: white;
+	background: var(--green);
 }
 
-.App-link {
-  color: #61dafb;
+.app {
+	width: 800px;
+	padding-left: 50px;
+	padding-right: 50px;
+	margin-left: auto;
+	margin-right: auto;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+h1 {
+	text-align: center;
+}
+
+.searchbar {
+	width: 800px;
+	display: flex;
+	align-items: center;
+	border-radius: 1rem;
+	height: 2rem;
+	width: 100%;
+	background-color: var(--darkgray);
+}
+
+.searchbar img {
+	height: 1.5rem;
+	width: 1.5rem;
+	padding-left: 0.5rem;
+	padding-right: 0.5rem;
+}
+
+.searchbar input {
+	background-color: var(--darkgray);
+	border: none;
+	color: var(--lightgray);
+	outline: none;
+}
+
+.maincontainer {
+	display: flex;
+	justify-content: space-between;
+	padding-top: 1.5rem;
+}
+
+.playlist,
+.searchresults {
+	background-color: var(--darkgray);
+	border-radius: 3rem;
+}
+
+.playlist h2,
+.searchresults h2 {
+	text-align: center;
+}
+
+.songscontainer,
+.playlistcontainer {
+	height: 550px;
+	overflow-y: auto;
+	overflow-x: hidden;
+	margin-bottom: 3rem;
+}
+
+.song {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+}
+
+.songcontainer {
+	display: flex;
+	padding: 0.5rem 0rem 0.5rem 1rem;
+	width: 20rem;
+	align-items: center;
+}
+
+.albumcover {
+	width: 4rem;
+	height: 4rem;
+}
+
+.songdata {
+	padding-left: 0.25rem;
+}
+
+.songdata p {
+	margin: 0;
+}
+
+.title {
+	font-weight: bold;
+}
+
+.album {
+	display: flex;
+	align-items: center;
+}
+
+.album p {
+	padding-left: 0.1rem;
+	font-style: italic;
+}
+
+#disc {
+	height: 1rem;
+	width: 1rem;
+}
+
+.addbutton {
+	height: 1.5rem;
+	width: 1.5rem;
+	margin-right: 1.5rem;
+	background-color: var(--green);
+}
+
+.savebuttoncontainer {
+	display: flex;
+	flex-direction: row-reverse;
+	padding-top: 1.5rem;
+	padding-bottom: 1.5rem;
+}
+
+.savebutton {
+	width: 10rem;
+	height: 3rem;
+	border-color: var(--green);
+	border-radius: 2rem;
+	background-color: var(--darkgray);
+	color: var(--lightgray);
+	font-weight: bold;
 }
