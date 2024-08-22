@@ -5,21 +5,21 @@ import Playlist from "./Playlist.js";
 
 function Container({ searchResults }) {
 	const [playlist, setPlaylist] = useState([]);
+	const [songId, setSongId] = useState(0);
 
 	const handleAdd = (id) => {
 		const index = searchResults.findIndex((result) => {
 			return result.id === id;
 		});
-		setPlaylist([...playlist, searchResults[index]]);
+		const song = { ...searchResults[index], id: songId };
+		setPlaylist([...playlist, song]);
+		setSongId(songId + 1);
 	};
 
 	const handleRemove = (id) => {
-		const index = playlist.findLastIndex((song) => {
-			return id === song.id;
-		});
 		setPlaylist(
-			playlist.filter((song, i) => {
-				return index !== i;
+			playlist.filter((song) => {
+				return song.id !== id;
 			})
 		);
 	};

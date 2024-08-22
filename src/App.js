@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import "./App.css";
 import SearchBar from "./components/SearchBar.js";
 import Container from "./components/Container.js";
@@ -12,14 +12,12 @@ function App() {
 			artist: "Billie Eilish",
 			album: "Hit Me Hard And Soft",
 			albumCover: hitmehardandsoft,
-			id: "0",
 		},
 		{
 			title: "Birds of a Feather",
 			artist: "Billie Eilish",
 			album: "Hit Me Hard And Soft",
 			albumCover: hitmehardandsoft,
-			id: "1",
 		},
 	]);
 
