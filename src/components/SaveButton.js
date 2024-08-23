@@ -1,9 +1,11 @@
 import React from "react";
 
-function SaveButton() {
+function SaveButton({ handleClick }) {
 	return (
 		<div className="savebuttoncontainer">
-			<button className="savebutton">Save to spotify</button>
+			<button onClick={handleClick} className="savebutton">
+				Save to spotify
+			</button>
 		</div>
 	);
 }

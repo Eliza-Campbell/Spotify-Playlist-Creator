@@ -11,6 +11,8 @@ function App() {
 	const [searchResults, setSearchResults] = useState([]);
 
 	const [accessToken, setAccessToken] = useState("");
+	const [authorizationCode, setAuthorizationCode] = useState("");
+
 	useEffect(() => {
 		async function getAccessToken() {
 			const response = await fetch(
@@ -27,8 +29,24 @@ function App() {
 			setAccessToken(json.access_token);
 		}
 
-		getAccessToken().catch(console.error);
-	}, []);
+		if (!authorizationCode || !accessToken) {
+			getAccessToken().catch(console.error);
+		} else {
+			const authorization =
+				"Basic " + window.btoa(clientID + ":" + clientSecret);
+			fetch("https://accounts.spotify.com/api/token", {
+				method: "POST",
+				headers: {
+					"content-type": "application/x-www-form-urlencoded",
+					Authorization: `${authorization}`,
+				},
+				body: `grant_type=authorization_code&code=${authorizationCode}&redirect_uri=http%3A%2F%2Flocalhost%3A3000%2F`,
+			})
+				.then((res) => res.json())
+				.then((res) => setAccessToken(res.access_token))
+				.catch(console.error);
+		}
+	}, [authorizationCode]);
 
 	function handleSearch(value) {
 		async function search(value) {
@@ -67,12 +85,31 @@ function App() {
 		search(value);
 	}
 
+	useEffect(() => {
+		const uri = window.location.href;
+		if (uri.includes("code")) {
+			const startIndex = uri.indexOf("=");
+			const endIndex = uri.indexOf("&");
+			setAuthorizationCode(uri.slice(startIndex + 1, endIndex));
+		}
+	}, []);
+
+	const handleClick = () => {
+		if (!authorizationCode) {
+			const state = Math.floor(Math.random() * 100000).toString();
+			const redirectURI = "http://localhost:3000/";
+			window.location.replace(
+				`https://accounts.spotify.com/authorize?response_type=code&client_id=${clientID}&scope=playlist-modify-public%20playlist-modify-private&redirect_uri=${redirectURI}&state=${state}`
+			);
+		}
+	};
+
 	return (
 		<div className="app">
 			<h1>Spotify Playlist Creator</h1>
 			<SearchBar handleSearch={handleSearch} />
 			<Container searchResults={searchResults} />
-			<SaveButton />
+			<SaveButton handleClick={handleClick} />
 		</div>
 	);
 }
