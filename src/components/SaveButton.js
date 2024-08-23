@@ -1,10 +1,10 @@
 import React from "react";
 
-function SaveButton({ handleClick }) {
+function SaveButton({ handleClick, auth }) {
 	return (
 		<div className="savebuttoncontainer">
 			<button onClick={handleClick} className="savebutton">
-				Save to spotify
+				{[!auth ? "Authorise Spotify" : "Export Playlist"]}
 			</button>
 		</div>
 	);

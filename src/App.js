@@ -124,7 +124,7 @@ function App() {
 			<h1>Spotify Playlist Creator</h1>
 			<SearchBar handleSearch={handleSearch} />
 			<Container searchResults={searchResults} />
-			<SaveButton handleClick={handleClick} />
+			<SaveButton auth={authorizationCode} handleClick={handleClick} />
 		</div>
 	);
 }
