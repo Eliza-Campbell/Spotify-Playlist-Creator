@@ -20,13 +20,27 @@ function Container({ searchResults }) {
 	}, []);
 
 	const [songId, setSongId] = useState(0);
+
+	useEffect(() => {
+		if (songId) {
+			localStorage.setItem("songId", songId.toString());
+		}
+	}, [songId]);
+
+	useEffect(() => {
+		const number = Number(localStorage.getItem("songId"));
+		if (number) {
+			setSongId(number);
+		}
+	}, []);
+
 	const handleAdd = (id) => {
 		const index = searchResults.findIndex((result) => {
 			return result.id === id;
 		});
 		const song = { ...searchResults[index], id: songId };
 		setPlaylist([...playlist, song]);
-		setSongId(songId + 1);
+		setSongId((prev) => prev + 1);
 	};
 
 	const handleRemove = (id) => {
