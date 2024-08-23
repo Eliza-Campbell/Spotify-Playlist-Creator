@@ -1,12 +1,25 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "../App.css";
 import SearchResults from "./SearchResults.js";
 import Playlist from "./Playlist.js";
 
 function Container({ searchResults }) {
 	const [playlist, setPlaylist] = useState([]);
-	const [songId, setSongId] = useState(0);
 
+	useEffect(() => {
+		if (playlist.length) {
+			localStorage.setItem("playlist", JSON.stringify(playlist));
+		}
+	}, [playlist]);
+
+	useEffect(() => {
+		const storage = JSON.parse(localStorage.getItem("playlist"));
+		if (storage) {
+			setPlaylist(storage);
+		}
+	}, []);
+
+	const [songId, setSongId] = useState(0);
 	const handleAdd = (id) => {
 		const index = searchResults.findIndex((result) => {
 			return result.id === id;

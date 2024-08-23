@@ -9,6 +9,21 @@ function App() {
 	const clientSecret = process.env.REACT_APP_CLIENT_SECRET;
 
 	const [searchResults, setSearchResults] = useState([]);
+	useEffect(() => {
+		if (searchResults.length) {
+			localStorage.setItem(
+				"searchResults",
+				JSON.stringify(searchResults)
+			);
+		}
+	}, [searchResults]);
+
+	useEffect(() => {
+		const storage = JSON.parse(localStorage.getItem("searchResults"));
+		if (storage) {
+			setSearchResults(storage);
+		}
+	}, []);
 
 	const [accessToken, setAccessToken] = useState("");
 	const [authorizationCode, setAuthorizationCode] = useState("");
