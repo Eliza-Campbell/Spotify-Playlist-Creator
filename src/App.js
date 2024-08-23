@@ -88,6 +88,7 @@ function App() {
 							artist: artistsString,
 							album: track.album.name,
 							albumCover: track.album.images[0].url,
+							uri: track.uri,
 							id: index,
 						});
 					});
