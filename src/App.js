@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import "./App.css";
 import SearchBar from "./components/SearchBar.js";
 import Container from "./components/Container.js";
-import SaveButton from "./components/SaveButton.js";
+import Options from "./components/Options.js";
 
 function App() {
 	const clientID = process.env.REACT_APP_CLIENT_ID;
@@ -60,6 +60,21 @@ function App() {
 				.then((res) => res.json())
 				.then((res) => setAccessToken(res.access_token))
 				.catch(console.error);
+		}
+	}, [authorizationCode]);
+
+	useEffect(() => {
+		if (authorizationCode) {
+			document.getElementsByClassName("optionscontainer")[0].style[
+				"flex-direction"
+			] = "row";
+			document.getElementsByClassName("titleeditor")[0].style["display"] =
+				"flex";
+			document.getElementsByClassName("buttons")[0].style["width"] =
+				"24rem";
+			document.getElementsByClassName("publicsetting")[0].style[
+				"display"
+			] = "block";
 		}
 	}, [authorizationCode]);
 
@@ -125,7 +140,7 @@ function App() {
 			<h1>Spotify Playlist Creator</h1>
 			<SearchBar handleSearch={handleSearch} />
 			<Container searchResults={searchResults} />
-			<SaveButton auth={authorizationCode} handleClick={handleClick} />
+			<Options auth={authorizationCode} handleClick={handleClick} />
 		</div>
 	);
 }
