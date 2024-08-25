@@ -45,8 +45,8 @@ function App() {
 	const handleClick = () => {
 		if (!authorizationCode) {
 			const state = Math.floor(Math.random() * 100000).toString();
-			const redirectURI = "https://spotify-playlistcreator.netlify.app/";
-			// const redirectURI = "http://localhost:3000/";
+			// const redirectURI = "https://spotify-playlistcreator.netlify.app/";
+			const redirectURI = "http://localhost:3000/";
 			window.location.replace(
 				`https://accounts.spotify.com/authorize?response_type=code&client_id=${clientID}&scope=user-read-private%20user-read-email%20playlist-modify-public%20playlist-modify-private&redirect_uri=${redirectURI}&state=${state}`
 			);
@@ -75,8 +75,8 @@ function App() {
 					"content-type": "application/x-www-form-urlencoded",
 					Authorization: `${authorization}`,
 				},
-				body: `grant_type=authorization_code&code=${authorizationCode}&redirect_uri=https%3A%2F%2Fspotify-playlistcreator.netlify.app%2F`,
-				// body: `grant_type=authorization_code&code=${authorizationCode}&redirect_uri=http%3A%2F%2Flocalhost%3A3000%2F`,
+				// body: `grant_type=authorization_code&code=${authorizationCode}&redirect_uri=https%3A%2F%2Fspotify-playlistcreator.netlify.app%2F`,
+				body: `grant_type=authorization_code&code=${authorizationCode}&redirect_uri=http%3A%2F%2Flocalhost%3A3000%2F`,
 			})
 				.then((res) => res.json())
 				.then((res) => {
@@ -150,34 +150,115 @@ function App() {
 	}
 
 	const [title, setTitle] = useState("");
+	const [playlist, setPlaylist] = useState([]);
+	//handle localStorage for playlist
+	useEffect(() => {
+		if (playlist.length) {
+			localStorage.setItem("playlist", JSON.stringify(playlist));
+		}
+	}, [playlist]);
+	useEffect(() => {
+		const storage = JSON.parse(localStorage.getItem("playlist"));
+		if (storage) {
+			setPlaylist(storage);
+		}
+	}, []);
+
+	const [songId, setSongId] = useState(0);
+	//handle localStorage for songId
+	useEffect(() => {
+		if (songId) {
+			localStorage.setItem("songId", songId.toString());
+		}
+	}, [songId]);
+	useEffect(() => {
+		const number = Number(localStorage.getItem("songId"));
+		if (number) {
+			setSongId(number);
+		}
+	}, []);
+
+	const handleAddSong = (id) => {
+		const index = searchResults.findIndex((result) => {
+			return result.id === id;
+		});
+		const song = { ...searchResults[index], id: songId };
+		setPlaylist([...playlist, song]);
+		setSongId((prev) => prev + 1);
+	};
+
+	const handleRemoveSong = (id) => {
+		setPlaylist(
+			playlist.filter((song) => {
+				return song.id !== id;
+			})
+		);
+	};
+
+	const [privacy, setPrivacy] = useState("public");
 
 	async function postPlaylist() {
+		async function createPlaylist() {
+			const playlistTitle = [title ? title : "New Playlist"];
+			const response = await fetch(
+				`https://api.spotify.com/v1/users/${userId}/playlists`,
+				{
+					method: "POST",
+					headers: {
+						Authorization: `Bearer ${accessToken}`,
+						"Content-Type": "application/json",
+					},
+					body: JSON.stringify({
+						name: `${playlistTitle}`,
+						public: privacy === "public",
+					}),
+				}
+			).catch(console.error);
+			if (response.ok) {
+				const json = await response.json();
+				console.log(json);
+				return json.id;
+			}
+		}
+		const id = await createPlaylist();
+		let uris = [];
+		playlist.forEach((track) => {
+			uris.push(track.uri);
+		});
 		const response = await fetch(
-			`https://api.spotify.com/v1/users/${userId}/playlists`,
+			`https://api.spotify.com/v1/playlists/${id}/tracks`,
 			{
-				method: "POST",
+				method: "PUT",
 				headers: {
 					Authorization: `Bearer ${accessToken}`,
 					"Content-Type": "application/json",
 				},
 				body: JSON.stringify({
-					name: `${title}`,
-					public: false,
+					uris: uris,
 				}),
 			}
-		);
+		).catch(console.error);
+		if (response.ok) {
+			alert("Playlist added to spotify.");
+		}
 	}
 
 	return (
 		<div className="app">
 			<h1>Spotify Playlist Creator</h1>
 			<SearchBar handleSearch={handleSearch} />
-			<Container searchResults={searchResults} />
+			<Container
+				searchResults={searchResults}
+				playlist={playlist}
+				handleAdd={handleAddSong}
+				handleRemove={handleRemoveSong}
+			/>
 			<Options
 				postPlaylist={postPlaylist}
 				auth={authorizationCode}
 				handleClick={handleClick}
 				setTitle={setTitle}
+				setPrivacy={setPrivacy}
 			/>
 		</div>
 	);

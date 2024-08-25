@@ -4,9 +4,7 @@ const green = "#1db954";
 const lightgray = "#b3b3b3";
 const darkgray = "#212121";
 
-function PrivacyButtons() {
-	const [privacy, setPrivacy] = useState("public");
-
+function PrivacyButtons({ setPrivacy }) {
 	const handlePrivacyClick = (e) => {
 		if (e.target.id === "ppleft") {
 			setPrivacy("public");
