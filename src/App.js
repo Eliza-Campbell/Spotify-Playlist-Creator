@@ -9,6 +9,7 @@ function App() {
 	const clientSecret = process.env.REACT_APP_CLIENT_SECRET;
 
 	const [searchResults, setSearchResults] = useState([]);
+	// retrieves and handles localStorage for searchResults
 	useEffect(() => {
 		if (searchResults.length) {
 			localStorage.setItem(
@@ -17,7 +18,6 @@ function App() {
 			);
 		}
 	}, [searchResults]);
-
 	useEffect(() => {
 		const storage = JSON.parse(localStorage.getItem("searchResults"));
 		if (storage) {
@@ -26,27 +26,47 @@ function App() {
 	}, []);
 
 	const [accessToken, setAccessToken] = useState("");
-	const [authorizationCode, setAuthorizationCode] = useState("");
-
+	//create new access token when page renders
 	useEffect(() => {
-		async function getAccessToken() {
-			const response = await fetch(
-				"https://accounts.spotify.com/api/token",
-				{
-					headers: {
-						"Content-Type": "application/x-www-form-urlencoded",
-					},
-					body: `grant_type=client_credentials&client_id=${clientID}&client_secret=${clientSecret}`,
-					method: "POST",
-				}
-			);
-			const json = await response.json();
-			setAccessToken(json.access_token);
-		}
+		fetch("https://accounts.spotify.com/api/token", {
+			headers: {
+				"Content-Type": "application/x-www-form-urlencoded",
+			},
+			body: `grant_type=client_credentials&client_id=${clientID}&client_secret=${clientSecret}`,
+			method: "POST",
+		})
+			.then((res) => res.json())
+			.then((res) => setAccessToken(res.access_token))
+			.catch(console.error);
+	}, []);
 
-		if (!authorizationCode || !accessToken) {
-			getAccessToken().catch(console.error);
-		} else {
+	const [authorizationCode, setAuthorizationCode] = useState("");
+	//handles request for authorization
+	const handleClick = () => {
+		if (!authorizationCode) {
+			const state = Math.floor(Math.random() * 100000).toString();
+			const redirectURI = "https://spotify-playlistcreator.netlify.app/";
+			// const redirectURI = "http://localhost:3000/";
+			window.location.replace(
+				`https://accounts.spotify.com/authorize?response_type=code&client_id=${clientID}&scope=user-read-private%20user-read-email%20playlist-modify-public%20playlist-modify-private&redirect_uri=${redirectURI}&state=${state}`
+			);
+		}
+	};
+
+	//checks if authorized on each render
+	useEffect(() => {
+		const uri = window.location.href;
+		if (uri.includes("code")) {
+			const startIndex = uri.indexOf("=");
+			const endIndex = uri.indexOf("&");
+			setAuthorizationCode(uri.slice(startIndex + 1, endIndex));
+		}
+	}, []);
+
+	const [userId, setUserId] = useState("");
+	//once authorized, swap bearer token for access_token, set userId
+	useEffect(() => {
+		if (authorizationCode) {
 			const authorization =
 				"Basic " + window.btoa(clientID + ":" + clientSecret);
 			fetch("https://accounts.spotify.com/api/token", {
@@ -56,13 +76,25 @@ function App() {
 					Authorization: `${authorization}`,
 				},
 				body: `grant_type=authorization_code&code=${authorizationCode}&redirect_uri=https%3A%2F%2Fspotify-playlistcreator.netlify.app%2F`,
+				// body: `grant_type=authorization_code&code=${authorizationCode}&redirect_uri=http%3A%2F%2Flocalhost%3A3000%2F`,
 			})
 				.then((res) => res.json())
-				.then((res) => setAccessToken(res.access_token))
+				.then((res) => {
+					fetch("https://api.spotify.com/v1/me", {
+						headers: {
+							Authorization: `Bearer ${res.access_token}`,
+						},
+					})
+						.then((res) => res.json())
+						.then((res) => setUserId(res.id))
+						.catch(console.error);
+					setAccessToken(res.access_token);
+				})
 				.catch(console.error);
 		}
 	}, [authorizationCode]);
 
+	//change CSS layout of page once authorised
 	useEffect(() => {
 		if (authorizationCode) {
 			document.getElementsByClassName("optionscontainer")[0].style[
@@ -78,6 +110,7 @@ function App() {
 		}
 	}, [authorizationCode]);
 
+	//GET request for search results
 	function handleSearch(value) {
 		async function search(value) {
 			const query = encodeURI(value);
@@ -115,25 +148,6 @@ function App() {
 		}
 		search(value);
 	}
-
-	useEffect(() => {
-		const uri = window.location.href;
-		if (uri.includes("code")) {
-			const startIndex = uri.indexOf("=");
-			const endIndex = uri.indexOf("&");
-			setAuthorizationCode(uri.slice(startIndex + 1, endIndex));
-		}
-	}, []);
-
-	const handleClick = () => {
-		if (!authorizationCode) {
-			const state = Math.floor(Math.random() * 100000).toString();
-			const redirectURI = "https://spotify-playlistcreator.netlify.app/";
-			window.location.replace(
-				`https://accounts.spotify.com/authorize?response_type=code&client_id=${clientID}&scope=playlist-modify-public%20playlist-modify-private&redirect_uri=${redirectURI}&state=${state}`
-			);
-		}
-	};
 
 	return (
 		<div className="app">
