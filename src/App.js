@@ -45,8 +45,8 @@ function App() {
 	const handleClick = () => {
 		if (!authorizationCode) {
 			const state = Math.floor(Math.random() * 100000).toString();
-			// const redirectURI = "https://spotify-playlistcreator.netlify.app/";
-			const redirectURI = "http://localhost:3000/";
+			const redirectURI = "https://spotify-playlistcreator.netlify.app/";
+			// const redirectURI = "http://localhost:3000/";
 			window.location.replace(
 				`https://accounts.spotify.com/authorize?response_type=code&client_id=${clientID}&scope=user-read-private%20user-read-email%20playlist-modify-public%20playlist-modify-private&redirect_uri=${redirectURI}&state=${state}`
 			);
@@ -75,8 +75,8 @@ function App() {
 					"content-type": "application/x-www-form-urlencoded",
 					Authorization: `${authorization}`,
 				},
-				// body: `grant_type=authorization_code&code=${authorizationCode}&redirect_uri=https%3A%2F%2Fspotify-playlistcreator.netlify.app%2F`,
-				body: `grant_type=authorization_code&code=${authorizationCode}&redirect_uri=http%3A%2F%2Flocalhost%3A3000%2F`,
+				body: `grant_type=authorization_code&code=${authorizationCode}&redirect_uri=https%3A%2F%2Fspotify-playlistcreator.netlify.app%2F`,
+				// body: `grant_type=authorization_code&code=${authorizationCode}&redirect_uri=http%3A%2F%2Flocalhost%3A3000%2F`,
 			})
 				.then((res) => res.json())
 				.then((res) => {
