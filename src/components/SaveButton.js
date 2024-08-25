@@ -19,7 +19,7 @@ function SaveButton({ handleClick, auth }) {
 	return (
 		<div
 			className="savebuttoncontainer"
-			style={{ flexDirection: [auth ? "auto" : "row-reverse"] }}
+			style={{ flexDirection: [auth ? "row" : "row-reverse"] }}
 		>
 			<input
 				className="titleeditor"
@@ -35,7 +35,7 @@ function SaveButton({ handleClick, auth }) {
 			>
 				<div
 					className="publicsetting"
-					style={{ display: [auth ? "auto" : "none"] }}
+					style={{ display: [auth ? "block" : "none"] }}
 				>
 					<button
 						className="ppbutton"
