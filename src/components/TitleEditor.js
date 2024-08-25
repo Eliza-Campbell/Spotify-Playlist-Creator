@@ -4,13 +4,14 @@ function TitleEditor() {
 	const [title, setTitle] = useState("");
 
 	return (
-		<input
-			className="titleeditor"
-			type="text"
-			placeholder="Enter playlist title"
-			value={title}
-			onChange={(e) => setTitle(e.target.value)}
-		></input>
+		<div className="titleeditor">
+			<input
+				type="text"
+				placeholder="Enter playlist title"
+				value={title}
+				onChange={(e) => setTitle(e.target.value)}
+			></input>
+		</div>
 	);
 }
 

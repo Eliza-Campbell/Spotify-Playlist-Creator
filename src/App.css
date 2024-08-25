@@ -149,15 +149,21 @@ h1 {
 
 .titleeditor {
 	display: none;
+	align-items: center;
 	height: 3rem;
 	width: 24rem;
-	padding-left: 1rem;
 	border-radius: 2rem;
-	border-color: var(--gray);
 	background-color: var(--darkgray);
-	outline: var(--green);
+}
+
+.titleeditor input {
+	background-color: var(--darkgray);
+	border: none;
+	color: var(--lightgray);
+	outline: none;
 	color: white;
 	font-size: 1rem;
+	margin-left: 1rem;
 }
 
 .buttons {
