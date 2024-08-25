@@ -149,7 +149,7 @@ h1 {
 }
 
 .titleeditor {
-	display: flex;
+	display: none;
 	align-items: center;
 	height: 3.375rem;
 	width: 24rem;
