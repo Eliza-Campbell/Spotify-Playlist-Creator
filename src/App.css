@@ -187,12 +187,16 @@ h1 {
 }
 
 #ppleft {
+	background-color: var(--green);
+	color: var(--darkgray);
 	border-top-left-radius: 2rem;
 	border-bottom-left-radius: 2rem;
 	border-right: 1px;
 }
 
 #ppright {
+	background-color: var(--darkgray);
+	color: var(--lightgray);
 	border-top-right-radius: 2rem;
 	border-bottom-right-radius: 2rem;
 	border-left: 1px;
