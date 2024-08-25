@@ -40,7 +40,7 @@ h1 {
 	display: flex;
 	align-items: center;
 	border-radius: 1rem;
-	height: 2rem;
+	height: 2.5rem;
 	width: 100%;
 	background-color: var(--darkgray);
 }
@@ -204,5 +204,9 @@ h1 {
 }
 
 footer {
+	position: absolute;
+	top: 895px;
+	width: 100%;
 	padding-left: 0.5rem;
+	padding-bottom: 0.5rem;
 }
