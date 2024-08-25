@@ -149,12 +149,33 @@ function App() {
 		search(value);
 	}
 
+	async function postPlaylist() {
+		const response = await fetch(
+			`https://api.spotify.com/v1/users/${userId}/playlists`,
+			{
+				method: "POST",
+				headers: {
+					Authorization: `Bearer ${accessToken}`,
+					"Content-Type": "application/json",
+				},
+				body: JSON.stringify({
+					name: "My playlist",
+					public: false,
+				}),
+			}
+		);
+	}
+
 	return (
 		<div className="app">
 			<h1>Spotify Playlist Creator</h1>
 			<SearchBar handleSearch={handleSearch} />
 			<Container searchResults={searchResults} />
-			<Options auth={authorizationCode} handleClick={handleClick} />
+			<Options
+				postPlaylist={postPlaylist}
+				auth={authorizationCode}
+				handleClick={handleClick}
+			/>
 		</div>
 	);
 }

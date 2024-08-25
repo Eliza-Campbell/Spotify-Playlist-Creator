@@ -1,9 +1,17 @@
 import React from "react";
 import "../App.css";
 
-function ExportButton({ text, handleClick }) {
+function ExportButton({ text, handleClick, postPlaylist, auth }) {
+	const handleButtonClick = () => {
+		if (auth) {
+			postPlaylist();
+		} else {
+			handleClick();
+		}
+	};
+
 	return (
-		<button onClick={handleClick} className="savebutton">
+		<button onClick={handleButtonClick} className="savebutton">
 			{text}
 		</button>
 	);
