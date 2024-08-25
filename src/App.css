@@ -220,6 +220,10 @@ h1 {
 	font-size: 1rem;
 }
 
+.savebutton:active {
+	background-color: var(--green);
+}
+
 footer {
 	background-color: var(--darkgray);
 	height: 1.5rem;
