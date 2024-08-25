@@ -149,6 +149,8 @@ function App() {
 		search(value);
 	}
 
+	const [title, setTitle] = useState("");
+
 	async function postPlaylist() {
 		const response = await fetch(
 			`https://api.spotify.com/v1/users/${userId}/playlists`,
@@ -159,7 +161,7 @@ function App() {
 					"Content-Type": "application/json",
 				},
 				body: JSON.stringify({
-					name: "My playlist",
+					name: `${title}`,
 					public: false,
 				}),
 			}
@@ -175,6 +177,7 @@ function App() {
 				postPlaylist={postPlaylist}
 				auth={authorizationCode}
 				handleClick={handleClick}
+				setTitle={setTitle}
 			/>
 		</div>
 	);
