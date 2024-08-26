@@ -181,8 +181,9 @@ span {
 
 .publicsetting {
 	display: none;
+	justify-content: space-between;
 	height: 3.375rem;
-	width: 13rem;
+	width: 15.5rem;
 	border-color: var(--green);
 	border-radius: 2rem;
 	background-color: var(--darkgray);
@@ -190,9 +191,13 @@ span {
 	font-size: 1rem;
 }
 
+.publicsetting p {
+	margin-left: 1.1rem;
+}
+
 .ppbutton {
 	height: 3.375rem;
-	width: 6.5rem;
+	width: 3.5rem;
 	font-size: 1rem;
 	background-color: var(--darkgray);
 	color: var(--lightgray);

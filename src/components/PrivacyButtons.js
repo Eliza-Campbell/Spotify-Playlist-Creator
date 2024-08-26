@@ -26,20 +26,23 @@ function PrivacyButtons({ setPrivacy }) {
 
 	return (
 		<div className="publicsetting">
-			<button
-				className="ppbutton"
-				id="ppleft"
-				onClick={handlePrivacyClick}
-			>
-				Public
-			</button>
-			<button
-				className="ppbutton"
-				id="ppright"
-				onClick={handlePrivacyClick}
-			>
-				Private
-			</button>
+			<p>Add to profile?</p>
+			<div>
+				<button
+					className="ppbutton"
+					id="ppleft"
+					onClick={handlePrivacyClick}
+				>
+					Yes
+				</button>
+				<button
+					className="ppbutton"
+					id="ppright"
+					onClick={handlePrivacyClick}
+				>
+					No
+				</button>
+			</div>
 		</div>
 	);
 }

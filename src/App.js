@@ -106,7 +106,9 @@ function App() {
 				"24rem";
 			document.getElementsByClassName("publicsetting")[0].style[
 				"display"
-			] = "block";
+			] = "flex";
+			document.getElementsByClassName("savebutton")[0].style["width"] =
+				"7.5rem";
 		}
 	}, [authorizationCode]);
 
