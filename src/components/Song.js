@@ -1,5 +1,4 @@
 import React from "react";
-import disc from "./imgs/disc.png";
 import "../App.css";
 
 function Song({
@@ -23,8 +22,9 @@ function Song({
 					<p className="title">{title}</p>
 					<p className="artist">{artist}</p>
 					<div className="album">
-						<img id="disc" src={disc} />
-						<p>{album}</p>
+						<p>
+							🎧<span>{album}</span>
+						</p>
 					</div>
 				</div>
 			</div>
