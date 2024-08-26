@@ -8,7 +8,7 @@ function ButtonsContainer({ auth, handleClick, postPlaylist, setPrivacy }) {
 		<div className="buttons">
 			<PrivacyButtons setPrivacy={setPrivacy} />
 			<ExportButton
-				text={[!auth ? "Authorise Spotify" : "Export Playlist"]}
+				text={[!auth ? "Authorise Spotify" : "Export"]}
 				handleClick={handleClick}
 				postPlaylist={postPlaylist}
 				auth={auth}
