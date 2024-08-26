@@ -41,7 +41,7 @@ h1 {
 	width: 800px;
 	display: flex;
 	align-items: center;
-	border-radius: 1rem;
+	border-radius: 2rem;
 	height: 2.5rem;
 	width: 100%;
 	background-color: var(--darkgray);
@@ -50,8 +50,8 @@ h1 {
 .searchbar img {
 	height: 1.5rem;
 	width: 1.5rem;
-	margin-left: 0.5rem;
-	margin-right: 0.5rem;
+	margin-left: 1rem;
+	margin-right: 0.75rem;
 	cursor: pointer;
 }
 
@@ -61,7 +61,7 @@ h1 {
 }
 
 .searchbar input {
-	width: 750px;
+	width: 730px;
 	background-color: var(--darkgray);
 	border: none;
 	color: var(--lightgray);
