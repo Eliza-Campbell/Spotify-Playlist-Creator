@@ -110,7 +110,7 @@ h1 {
 }
 
 .songdata {
-	padding-left: 0.25rem;
+	margin-left: 0.4rem;
 }
 
 .songdata p {
@@ -127,7 +127,7 @@ h1 {
 }
 
 .album p {
-	padding-left: 0.1rem;
+	margin-left: 0.4rem;
 	font-style: italic;
 }
 
