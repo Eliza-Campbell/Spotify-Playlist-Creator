@@ -145,6 +145,10 @@ h1 {
 	border-color: var(--gray);
 }
 
+.addbutton:hover {
+	cursor: pointer;
+}
+
 .optionscontainer {
 	display: flex;
 	flex-direction: row-reverse;
